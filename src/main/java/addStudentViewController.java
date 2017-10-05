@@ -1,10 +1,16 @@
+import javafx.embed.swing.SwingFXUtils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -12,7 +18,14 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,6 +44,9 @@ public class addStudentViewController implements Initializable {
     private TreeTableColumn<Student, Number> col1;
 
     @FXML
+    private Circle empImage;
+
+    @FXML
     private TreeTableColumn<Student, String> col2;
 
     @FXML
@@ -44,15 +60,31 @@ public class addStudentViewController implements Initializable {
     private List<TreeItem<Student>> itemList;
 
     private   Session session;
+    private FileChooser fileChooser ;
+    private Image empimage =null;
+    private BufferedImage employeeBufferedImage;
+
+    File file = new File(getClass().getResource("/images/usrImg.jpg").getPath());
+    byte[] bFile;
+
     @FXML
     void addToTable(MouseEvent event) {
 
         int sid = Integer.parseInt(id.getText());
         String sname = name.getText();
 
+
+         //windows
+        //File file = new File("images/extjsfirstlook.jpg");
+
+
+
+        readByteImage();
+
         Student s = new Student();
         s.setId(sid);
         s.setName(sname);
+        s.setImage(bFile);
 
         session.beginTransaction();
         session.save(s);
@@ -62,10 +94,12 @@ public class addStudentViewController implements Initializable {
 
         table.getRoot().getChildren().clear();
         table.getRoot().getChildren().addAll(itemList);
+        table.refresh();
     }
 
     @FXML
     void deleteFromTable(MouseEvent event) {
+
 
         TreeItem<Student> s = table.getSelectionModel().getSelectedItem();
 
@@ -77,14 +111,29 @@ public class addStudentViewController implements Initializable {
         table.getRoot().getChildren().clear();
         table.getRoot().getChildren().addAll(itemList);
 
+
     }
 
+    public void readByteImage(){
+        bFile = new byte[(int) file.length()];
+
+        try {
+            System.out.println(file.length());
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(bFile);
+            fileInputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     @FXML
     void updateTable(MouseEvent event) {
 
         TreeItem<Student> s = table.getSelectionModel().getSelectedItem();
         s.getValue().setName(name.getText());
+        readByteImage();
+        s.getValue().setImage(bFile);
 
         session.beginTransaction();
         session.update(s.getValue());
@@ -99,6 +148,15 @@ public class addStudentViewController implements Initializable {
         id.setText(String.valueOf(s.getId()));
         name.setText(s.getName());
 
+        BufferedImage img = null;
+        try {
+             img = ImageIO.read(new ByteArrayInputStream(s.getImage()));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Image image = SwingFXUtils.toFXImage(img, null);
+
+        empImage.setFill(new ImagePattern(image));
 
     }
 
@@ -116,6 +174,7 @@ public class addStudentViewController implements Initializable {
 ///############################################################################################################################
         session.beginTransaction();
         itemList = new ArrayList<>();
+
 
         Query query = session.createQuery("select s from Student s");
         List<Student> students = query.list();
@@ -141,6 +200,9 @@ public class addStudentViewController implements Initializable {
         table.setShowRoot(false);
 
 
+        fileChooser = new FileChooser();
+        empImage.setFill(new ImagePattern(new Image("/images/usrImg.jpg")));
+
     }
 
 
@@ -158,5 +220,35 @@ public class addStudentViewController implements Initializable {
         id.setText("");
         name.setText("");
         table.getSelectionModel().select(null);
+    }
+
+    @FXML
+    void uplodePhoto(ActionEvent event) {
+
+            fileChooser.setTitle("Select Employee Image");
+
+
+
+
+//        fileChooser.getExtensionFilters().addAll(
+//
+//                new FileChooser.ExtensionFilter("JPEG Files", "*.jpg"));
+
+
+
+            file = fileChooser.showOpenDialog(null);
+
+
+            try {
+
+                empimage = new Image(file.toURI().toString());
+                empImage.setFill(new ImagePattern(empimage));
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
+
     }
 }

@@ -13,8 +13,9 @@ import javax.persistence.*;
 @Access(AccessType.PROPERTY)
 public class Student {
 
-    IntegerProperty id;
-    StringProperty name;
+    private IntegerProperty id;
+    private StringProperty name;
+    private byte[] image;
 
     public Student() {
         this.id = new SimpleIntegerProperty();
@@ -46,5 +47,16 @@ public class Student {
 
     public void setName(String name) {
         this.name.set(name);
+    }
+
+
+    @Lob
+    @Column(name="BOOK_IMAGE", nullable=false, columnDefinition="mediumblob")
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }

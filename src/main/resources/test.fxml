@@ -6,10 +6,11 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane prefHeight="567.0" prefWidth="816.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addStudentViewController">
+<AnchorPane prefHeight="726.0" prefWidth="1004.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="addStudentViewController">
    <children>
-      <TreeTableView fx:id="table" layoutX="62.0" layoutY="124.0" onMouseClicked="#setFields" prefHeight="319.0" prefWidth="372.0">
+      <TreeTableView fx:id="table" layoutX="62.0" layoutY="295.0" onMouseClicked="#setFields" prefHeight="319.0" prefWidth="372.0">
         <columns>
           <TreeTableColumn fx:id="col1" prefWidth="141.0" text="ID" />
           <TreeTableColumn fx:id="col2" prefWidth="230.0" text="Name" />
@@ -24,5 +25,7 @@
       <Button layoutX="685.0" layoutY="374.0" mnemonicParsing="false" onMouseClicked="#deleteFromTable" text="Delete" />
       <Button layoutX="551.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#reset" text="Reset" />
       <Button layoutX="653.0" layoutY="454.0" mnemonicParsing="false" onMouseClicked="#exit" text="Exit" />
+      <Button layoutX="566.0" layoutY="504.0" mnemonicParsing="false" onAction="#uplodePhoto" prefHeight="31.0" prefWidth="153.0" text="Uplode image" />
+      <Circle fx:id="empImage" fill="DODGERBLUE" layoutX="196.0" layoutY="139.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
    </children>
 </AnchorPane>
