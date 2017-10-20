@@ -30,6 +30,37 @@
             <scope>test</scope>
         </dependency>
 
+
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.openimaj/core &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--<groupId>org.openimaj</groupId>-->
+        <!--<artifactId>core</artifactId>-->
+        <!--<version>1.3.6</version>-->
+        <!--</dependency>-->
+
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.openimaj/core-video &ndash;&gt;-->
+        <!--<dependency>-->
+        <!--<groupId>org.openimaj</groupId>-->
+        <!--<artifactId>core-video</artifactId>-->
+        <!--<version>1.3.6</version>-->
+        <!--</dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.openimaj/core-video-capture -->
+        <dependency>
+            <groupId>org.openimaj</groupId>
+            <artifactId>core-video-capture</artifactId>
+            <version>1.3.6</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.openimaj/faces -->
+        <dependency>
+            <groupId>org.openimaj</groupId>
+            <artifactId>faces</artifactId>
+            <version>1.3.6</version>
+        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>

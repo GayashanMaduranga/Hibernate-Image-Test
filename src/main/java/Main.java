@@ -12,10 +12,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-
-
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.load(getClass().getResource("test.fxml").openStream());
@@ -23,14 +19,10 @@ public class Main extends Application {
             primaryStage.setScene(new Scene(fxmlLoader.getRoot()));
             primaryStage.show();
         } catch (Exception e) {
-
             e.printStackTrace();
         }
 
         primaryStage.setOnCloseRequest(event -> System.exit(0));
-
-
-
 
     }
 
